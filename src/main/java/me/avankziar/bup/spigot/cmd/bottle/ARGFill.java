@@ -51,17 +51,19 @@ public class ARGFill extends ArgumentModule
 				bottleamount = Integer.MAX_VALUE;
 			}
 			doBottle(player, bottleamount);
+			return;
 		} else if(new ConfigHandler().getLevelTerm().contains(s[1]))
 		{
-			if(MatchApi.isInteger(s[1]))
+			if(MatchApi.isInteger(s[0]))
 			{
-				level = Integer.parseInt(s[1]);
+				level = Integer.parseInt(s[0]);
 			}
 			if(level < 0)
 			{
 				level = 0;
 			}
 			doLevel(player, level);
+			return;
 		}
 		player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.WrongInput")
 				.replace("%level%", String.join(", ", new ConfigHandler().getLevelTerm()))
@@ -69,21 +71,20 @@ public class ARGFill extends ArgumentModule
 				));
 	}
 	
-	private void doBottle(Player player, int bottleamount)
+	private void doBottle(Player player, int bottle)
 	{
-		int texp = Experience.getExp(player);
-		int expinb = (int) new ConfigHandler().getExpIntoBottle(player);
-		if(bottleamount == 0)
+		int fillbottle = bottle;
+		int boam = 0;
+		int pexp = Experience.getExp(player);
+		double expinb = new ConfigHandler().getExpIntoBottle(player);
+		if(fillbottle == 0)
 		{
-			bottleamount = texp/expinb;
+			fillbottle = (int)((double)pexp/expinb);
 		}
-		if(texp < expinb*bottleamount)
+		if(pexp < expinb*fillbottle)
 		{
-			bottleamount = texp/expinb;
+			fillbottle = (int) ((double)pexp/expinb);
 		}
-		int endexp = texp;
-		int boam = bottleamount;
-		int rexp = 0;
 		int overglassbottle = 0;
 		for(int i = 0; i < player.getInventory().getStorageContents().length; i++)
 		{
@@ -106,21 +107,23 @@ public class ARGFill extends ArgumentModule
 			}
 			int am = is.getAmount();
 			boolean breaks = false;
-			if(boam < am)
+			if(fillbottle > boam + am)
 			{
-				overglassbottle = am-boam;
-				am = boam;
+				boam += is.getAmount();
+			} else if(fillbottle == boam + am)
+			{
+				boam += is.getAmount();
 				breaks = true;
-			} else if(boam == am)
+			} else //fillbottle < boam + am
 			{
-				am = boam;
+				am = fillbottle - boam;
+				overglassbottle = is.getAmount() - am;
+				boam += am;
 				breaks = true;
 			}
-			rexp += am * expinb;
+			fillbottle -= is.getAmount() - am;
 			ItemStack js = new ItemStack(Material.EXPERIENCE_BOTTLE, am);
 			player.getInventory().setItem(i, js);
-			boam = boam - am;
-			endexp = endexp - am*expinb;
 			if(breaks)
 			{
 				break;
@@ -137,10 +140,10 @@ public class ARGFill extends ArgumentModule
 				}
 			}
 		}
-		Experience.changeExp(player, endexp, false);
+		Experience.changeExp(player, Experience.getExp(player) - (boam * (int) expinb), false);
 		player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.Fill")
-				.replace("%endexp%", String.valueOf(endexp))
-				.replace("%removeexp%", String.valueOf(rexp))
+				.replace("%endexp%", String.valueOf(Experience.getExp(player)))
+				.replace("%removeexp%", String.valueOf(boam * expinb))
 				.replace("%bottleamount%", String.valueOf(boam))
 				));
 	}
@@ -184,19 +187,18 @@ public class ARGFill extends ArgumentModule
 			if(fillbottle > boam + am)
 			{
 				boam += is.getAmount();
-				am = 0;
 			} else if(fillbottle == boam + am)
 			{
 				boam += is.getAmount();
-				am = 0;
 				breaks = true;
 			} else //fillbottle < boam + am
 			{
-				am = is.getAmount() - (fillbottle - boam);
+				am = fillbottle - boam;
 				overglassbottle = is.getAmount() - am;
-				boam += fillbottle - boam;
+				boam += am;
 				breaks = true;
 			}
+			fillbottle -= is.getAmount() - am;
 			ItemStack js = new ItemStack(Material.EXPERIENCE_BOTTLE, am);
 			player.getInventory().setItem(i, js);
 			if(breaks)

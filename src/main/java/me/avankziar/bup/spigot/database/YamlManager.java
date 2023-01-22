@@ -186,14 +186,14 @@ public class YamlManager
 				"&eInfobefehl für Expflaschen.",
 				"&eInfocommand for expbottle.");
 		String basePermission = "bottle.cmd.";
-		argumentInput(path+"_calculate", "openuntillevel", basePermission,
-				"/bottle openuntillevel [level]", "/bottle openuntillevel ", false,
-				"&c/bottle openuntillevel [Level] &f| Öffnet alle oder eine bestimmte Anzahl, bis zu dem angegeben Level, an Erfahrungsflaschen um deren Exp aufzunehmen.",
-				"&c/bottle openuntillevel [level] &f| Open all or a certain number, up to the specified level, of experience bottles to absorb their exp.",
-				"&bBefehlsrecht für &f/bottle openuntillevel [Level]",
-				"&bCommandright for &f/bottle openuntillevel [level]",
-				"&eÖffnet alle oder eine bestimmte Anzahl, bis zu dem angegeben Level, an Erfahrungsflaschen um deren Exp aufzunehmen.",
-				"&eOpen all or a certain number, up to the specified level, of experience bottles to absorb their exp.");
+		argumentInput(path+"_calculate", "calculate", basePermission,
+				"/bottle calculate [level]", "/bottle calculate ", false,
+				"&c/bottle calculate [Level] &f| Kalkuliert wieviel Expflasche benutzt oder abgefüllt werden können bis zum einem gewissen Level.",
+				"&c/bottle calculate [level] &f| Calculates how much exp bottle can be used or filled up to a certain level.",
+				"&bBefehlsrecht für &f/bottle calculate [Level]",
+				"&bCommandright for &f/bottle calculate [level]",
+				"&eKalkuliert wieviel Expflasche benutzt oder abgefüllt werden können bis zum einem gewissen Level.",
+				"&eCalculates how much exp bottle can be used or filled up to a certain level.");
 		argumentInput(path+"_fill", "fill", basePermission,
 				"/bottle fill [Number:Useage(bottle or level etc.)]", "/bottle fill ", false,
 				"&c/bottle fill [Zahl:Benutzung(Flasche oder Level etc.)] &f| Füllt die gesamte Spielerexp in Glasflaschen oder ein gewisse Flaschenanzahl. Optional bis zu einem gewissen Level.",
@@ -367,7 +367,7 @@ public class YamlManager
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 						"&cDu kannst keine Flaschen zu abfüllen, denn du hast das gewünschte Level bereits erreicht!",
 						"&cYou can not fill bottles, because you have already reached the desired level!"}));
-		languageKeys.put("CmdBottle.FillUntillevel", 
+		languageKeys.put("CmdBottle.FillUntilLevel", 
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 						"&eDu hast &f%bottleamount% &eExpflaschen befüllt bis zum Level &f%level%&e. Dafür hast du &f%removeexp% &eExp aufgewendet.",
 						"&eYou have filled &f%bottleamount% &eExp bottles up to the &f%level%&e level. You have spent &f%removeexp% &eExp for this."}));

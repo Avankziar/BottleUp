@@ -50,17 +50,19 @@ public class ARGUse extends ArgumentModule
 				bottleamount = Integer.MAX_VALUE;
 			}
 			doBottle(player, bottleamount);
+			return;
 		} else if(new ConfigHandler().getLevelTerm().contains(s[1]))
 		{
-			if(MatchApi.isInteger(s[1]))
+			if(MatchApi.isInteger(s[0]))
 			{
-				level = Integer.parseInt(s[1]);
+				level = Integer.parseInt(s[0]);
 			}
 			if(level < 0)
 			{
 				level = 0;
 			}
 			doLevel(player, level);
+			return;
 		}
 		player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.WrongInput")
 				.replace("%level%", String.join(", ", new ConfigHandler().getLevelTerm()))
@@ -131,12 +133,12 @@ public class ARGUse extends ArgumentModule
 		int gtexp = Experience.getExp(level);
 		int ptexp = Experience.getExp(player);
 		double expfromb = new ConfigHandler().getExpFromBottle(player);
-		if(gtexp < ptexp+expfromb)
+		double dif = gtexp-ptexp;
+		if(dif < expfromb)
 		{
 			player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.CannotUseMoreBottleBecauseLevelIsAlreadyReached")));
 			return;
 		}
-		double dif = gtexp-ptexp;
 		double div = dif/expfromb;
 		int openbottle = (int) Math.ceil(div);		
 		int boam = 0;
