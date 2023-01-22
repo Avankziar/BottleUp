@@ -1,7 +1,8 @@
-name: BootleUp
+name: BottleUp
 main: main.java.me.avankziar.bup.spigot.BottleUp
 version: 1
 author: Avankziar
 api-version: 1.17
 description: A Exp Bottle Plugin.
+softdepend: [InterfaceHub]
 website: TBA

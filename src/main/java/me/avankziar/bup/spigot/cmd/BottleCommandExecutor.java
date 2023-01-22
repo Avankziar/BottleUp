@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import main.java.me.avankziar.bup.general.ChatApi;
 import main.java.me.avankziar.bup.spigot.BottleUp;
-import main.java.me.avankziar.bup.spigot.assistance.Utility;
+import main.java.me.avankziar.bup.spigot.assistance.Experience;
 import main.java.me.avankziar.bup.spigot.cmdtree.ArgumentConstructor;
 import main.java.me.avankziar.bup.spigot.cmdtree.ArgumentModule;
 import main.java.me.avankziar.bup.spigot.cmdtree.CommandConstructor;
@@ -130,9 +130,9 @@ public class BottleCommandExecutor implements CommandExecutor
 	
 	public void baseCommands(final Player player)
 	{
-		int texp = Utility.getTotalExperience(player);
-		int expinb = new ConfigHandler().getExpIntoBottle(player);
-		int expfromb = new ConfigHandler().getExpFromBottle(player);
+		int texp = Experience.getExp(player);
+		int expinb = (int) new ConfigHandler().getExpIntoBottle(player);
+		int expfromb = (int) new ConfigHandler().getExpFromBottle(player);
 		double bottle = texp/expinb;
 		for(String s : plugin.getYamlHandler().getLang().getStringList("CmdBottle.BaseInfo"))
 		{

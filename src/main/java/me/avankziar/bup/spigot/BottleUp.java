@@ -22,8 +22,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import main.java.me.avankziar.bup.spigot.assistance.Utility;
+import main.java.me.avankziar.bup.spigot.cmd.BottleCommandExecutor;
 import main.java.me.avankziar.bup.spigot.cmd.BottleUpCommandExecutor;
 import main.java.me.avankziar.bup.spigot.cmd.TabCompletion;
+import main.java.me.avankziar.bup.spigot.cmd.bottle.ARGCalculate;
+import main.java.me.avankziar.bup.spigot.cmd.bottle.ARGFill;
+import main.java.me.avankziar.bup.spigot.cmd.bottle.ARGUse;
 import main.java.me.avankziar.bup.spigot.cmdtree.ArgumentConstructor;
 import main.java.me.avankziar.bup.spigot.cmdtree.ArgumentModule;
 import main.java.me.avankziar.bup.spigot.cmdtree.BaseConstructor;
@@ -109,25 +113,10 @@ public class BottleUp extends JavaPlugin
 		this.yamlManager = yamlManager;
 	}
 	
-	/*public MysqlSetup getMysqlSetup() 
-	{
-		return mysqlSetup;
-	}
-	
-	public MysqlHandler getMysqlHandler()
-	{
-		return mysqlHandler;
-	}*/
-	
 	public Utility getUtility()
 	{
 		return utility;
 	}
-	
-	/*public BackgroundTask getBackgroundTask()
-	{
-		return backgroundTask;
-	}*/
 	
 	public String getServername()
 	{
@@ -146,15 +135,17 @@ public class BottleUp extends JavaPlugin
 		getCommand(bottleup.getName()).setExecutor(new BottleUpCommandExecutor(plugin, bottleup));
 		getCommand(bottleup.getName()).setTabCompleter(tab);
 		
-		ArgumentConstructor fill = new ArgumentConstructor(CommandExecuteType.BOTTLE_FILLING, "filling", 0, 0, 1, false, null);
-		ArgumentConstructor fillulev = new ArgumentConstructor(CommandExecuteType.BOTTLE_FILLINGUNTILLEVEL, "fillinguntillevel", 0, 0, 1, false, null);
-		ArgumentConstructor open = new ArgumentConstructor(CommandExecuteType.BOTTLE_OPEN, "open", 0, 0, 1, false, null);
-		ArgumentConstructor openulev = new ArgumentConstructor(CommandExecuteType.BOTTLE_OPENUNTILLEVEL, "openuntillevel", 0, 0, 1, false, null);
+		ArgumentConstructor cal = new ArgumentConstructor(CommandExecuteType.BOTTLE_USE, "bottle_calculate", 0, 1, 1, false, null);
+		new ARGCalculate(cal);
+		ArgumentConstructor fill = new ArgumentConstructor(CommandExecuteType.BOTTLE_FIll, "bottle_fill", 0, 0, 1, false, null);
+		new ARGFill(fill);
+		ArgumentConstructor use = new ArgumentConstructor(CommandExecuteType.BOTTLE_USE, "bottle_use", 0, 0, 1, false, null);
+		new ARGUse(use);
 		
 		CommandConstructor bottle = new CommandConstructor(CommandExecuteType.BOTTLE, "bottle", false,
-				fill, fillulev, open, openulev);
+				cal, fill, use);
 		registerCommand(bottle.getPath(), bottle.getName());
-		getCommand(bottle.getName()).setExecutor(new BottleUpCommandExecutor(plugin, bottle));
+		getCommand(bottle.getName()).setExecutor(new BottleCommandExecutor(plugin, bottle));
 		getCommand(bottle.getName()).setTabCompleter(tab);
 	}
 	

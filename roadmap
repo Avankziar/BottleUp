@@ -1,3 +1,6 @@
 Future Build
 
 Build 1-0-0
+/bottle use [<Zahl:Bottle/Level>]
+/bottle fill [<Zahl:Bottle/Level>]
+/bottle calculate [<Zahl:Bottle/Level>]

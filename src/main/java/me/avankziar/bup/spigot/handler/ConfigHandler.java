@@ -1,5 +1,7 @@
 package main.java.me.avankziar.bup.spigot.handler;
 
+import java.util.List;
+
 import org.bukkit.entity.Player;
 
 import main.java.me.avankziar.bup.spigot.BottleUp;
@@ -24,23 +26,33 @@ public class ConfigHandler
 		return plugin.getYamlHandler().getConfig().getBoolean("EnableMechanic.VanillaThrowExpBottle", false);
 	}
 	
-	public int getExpIntoBottle(Player player)
+	public double getExpIntoBottle(Player player)
 	{
-		Double exp = plugin.getYamlHandler().getConfig().getDouble("ExpBottle.ExpIntoBottle", 20);
+		double exp = plugin.getYamlHandler().getConfig().getDouble("ExpBottle.ExpIntoBottle", 20);
 		if(plugin.getBonusMalus() != null)
 		{
 			exp = plugin.getBonusMalus().getResult(player.getUniqueId(), exp, BoniMali.EXP_IN_BOTTLE.getBonusMalus());
 		}
-		return Integer.parseInt(String.valueOf(exp));
+		return exp;
 	}
 	
-	public int getExpFromBottle(Player player)
+	public double getExpFromBottle(Player player)
 	{
-		Double exp = plugin.getYamlHandler().getConfig().getDouble("ExpBottle.ExpFromBottle", 20);
+		double exp = plugin.getYamlHandler().getConfig().getDouble("ExpBottle.ExpFromBottle", 20);
 		if(plugin.getBonusMalus() != null)
 		{
 			exp = plugin.getBonusMalus().getResult(player.getUniqueId(), exp, BoniMali.EXP_OUT_BOTTLE.getBonusMalus());
 		}
-		return Integer.parseInt(String.valueOf(exp));
+		return exp;
+	}
+	
+	public List<String> getBottleTerm()
+	{
+		return plugin.getYamlHandler().getConfig().getStringList("ExpBottle.BottleTerm");
+	}
+	
+	public List<String> getLevelTerm()
+	{
+		return plugin.getYamlHandler().getConfig().getStringList("ExpBottle.LevelTerm");
 	}
 }
