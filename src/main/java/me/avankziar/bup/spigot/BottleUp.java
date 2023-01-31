@@ -37,6 +37,7 @@ import main.java.me.avankziar.bup.spigot.database.YamlHandler;
 import main.java.me.avankziar.bup.spigot.database.YamlManager;
 import main.java.me.avankziar.bup.spigot.handler.ConfigHandler;
 import main.java.me.avankziar.bup.spigot.listener.PlayerExpBottleListener;
+import main.java.me.avankziar.bup.spigot.metrics.Metrics;
 import main.java.me.avankziar.bup.spigot.permission.BoniMali;
 import main.java.me.avankziar.ifh.general.bonusmalus.BonusMalus;
 import main.java.me.avankziar.ifh.general.bonusmalus.BonusMalusType;
@@ -84,6 +85,7 @@ public class BottleUp extends JavaPlugin
 		setupCommandTree();
 		setupListeners();
 		//setupBonusMalus();
+		setupBstats();
 	}
 	
 	public void onDisable()
@@ -423,5 +425,11 @@ public class BottleUp extends JavaPlugin
 	public BonusMalus getBonusMalus()
 	{
 		return bonusMalusConsumer;
+	}
+	
+	public void setupBstats()
+	{
+		int pluginId = 17589;
+        new Metrics(this, pluginId);
 	}
 }
