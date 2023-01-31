@@ -129,12 +129,7 @@ public class YamlManager
 		
 		configSpigotKeys.put("ServerName"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				"hub"}));
-		
-		configSpigotKeys.put("EnableCommands.Base"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				true}));
-		
+				"hub"}));		
 		configSpigotKeys.put("EnableMechanic.BonusMalus"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				true}));
@@ -168,23 +163,23 @@ public class YamlManager
 	//INFO:Commands
 	public void initCommands()
 	{		
-		commandsInput("bottleup", "bottleup", "bottleup.cmd.bottleup", 
-				"/bottleup [pagenumber]", "/bottleup ", false,
-				"&c/bottleup &f| Infoseite für alle Befehle.",
-				"&c/bottleup &f| Info page for all commands.",
-				"&bBefehlsrecht für &f/bottleup",
-				"&bCommandright for &f/bottleup",
+		commandsInput("bup", "bup", "bottleup.cmd.bup", 
+				"/bup [pagenumber]", "/bup ", false,
+				"&c/bup &f| Infoseite für alle Befehle.",
+				"&c/bup &f| Info page for all commands.",
+				"&bBefehlsrecht für &f/bup",
+				"&bCommandright for &f/bup",
 				"&eBasisbefehl für das BottleUp Plugin.",
 				"&eGroundcommand for the BottleUp Plugin.");
 		String path = "bottle";
 		commandsInput("bottle", "bottle", "bottle.cmd.bottle", 
 				"/bottle ", "/bottle ", false,
-				"&c/bottle &f| Infoseite für alle Befehle.",
-				"&c/bottle &f| Info page for all commands.",
+				"&c/bottle &f| Zeigt an, wieviel Exp man momentan hat, wieviel Exp in und aus Flaschen kommen und somit wieviel Flaschen man füllen könnte.",
+				"&c/bottle &f| Shows how much exp you currently have, how much exp is coming in and out of bottles, and thus how many bottles you could fill.",
 				"&bBefehlsrecht für &f/bottle",
 				"&bCommandright for &f/bottle",
-				"&eInfobefehl für Expflaschen.",
-				"&eInfocommand for expbottle.");
+				"&eZeigt an, wieviel Exp man momentan hat, wieviel Exp in und aus Flaschen kommen und somit wieviel Flaschen man füllen könnte.",
+				"&eShows how much exp you currently have, how much exp is coming in and out of bottles, and thus how many bottles you could fill.");
 		String basePermission = "bottle.cmd.";
 		argumentInput(path+"_calculate", "calculate", basePermission,
 				"/bottle calculate [level]", "/bottle calculate ", false,

@@ -83,7 +83,7 @@ public class BottleUp extends JavaPlugin
 		
 		setupCommandTree();
 		setupListeners();
-		setupBonusMalus();
+		//setupBonusMalus();
 	}
 	
 	public void onDisable()
@@ -126,11 +126,11 @@ public class BottleUp extends JavaPlugin
 	
 	private void setupCommandTree()
 	{		
-		infoCommand += plugin.getYamlHandler().getCommands().getString("bottleup.Name");
+		infoCommand += plugin.getYamlHandler().getCommands().getString("bup.Name");
 		
 		TabCompletion tab = new TabCompletion(plugin);
 		
-		CommandConstructor bottleup = new CommandConstructor(CommandExecuteType.BOTTLEUP, "bottleup", false);
+		CommandConstructor bottleup = new CommandConstructor(CommandExecuteType.BOTTLEUP, "bup", false);
 		registerCommand(bottleup.getPath(), bottleup.getName());
 		getCommand(bottleup.getName()).setExecutor(new BottleUpCommandExecutor(plugin, bottleup));
 		getCommand(bottleup.getName()).setTabCompleter(tab);
@@ -369,14 +369,15 @@ public class BottleUp extends JavaPlugin
 						{
 							continue;
 						}
-						if(getBonusMalus().isRegistered(pluginName.toLowerCase()+":"+bc.getPath()))
+						String bmn = pluginName.toLowerCase()+":"+bc.getPath();
+						if(getBonusMalus().isRegistered(bmn))
 						{
 							cmd++;
 							continue;
 						}
 						String[] ex = {plugin.getYamlHandler().getCommands().getString(bc.getPath()+".Explanation")};
 						getBonusMalus().register(
-								pluginName.toLowerCase()+":"+bc.getPath(),
+								bmn,
 								plugin.getYamlHandler().getCommands().getString(bc.getPath()+".Displayname", "Command "+bc.getName()),
 								true,
 								BonusMalusType.UP,
@@ -386,7 +387,8 @@ public class BottleUp extends JavaPlugin
 					List<BoniMali> list3 = new ArrayList<BoniMali>(EnumSet.allOf(BoniMali.class));
 					for(BoniMali ept : list3)
 					{
-						if(!getBonusMalus().isRegistered(pluginName.toLowerCase()+":"+ept.toString().toLowerCase()))
+						String bmn = pluginName.toLowerCase()+":"+ept.toString().toLowerCase();
+						if(!getBonusMalus().isRegistered(bmn))
 						{
 							BonusMalusType bmt = null;
 							switch(ept)
@@ -400,7 +402,7 @@ public class BottleUp extends JavaPlugin
 							}
 							List<String> lar = plugin.getYamlHandler().getBMLang().getStringList(ept.toString()+".Explanation");
 							getBonusMalus().register(
-									ept.getBonusMalus(),
+									bmn,
 									plugin.getYamlHandler().getBMLang().getString(ept.toString()+".Displayname", ept.toString()),
 									false,
 									bmt,
