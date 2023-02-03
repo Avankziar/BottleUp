@@ -33,14 +33,15 @@ import main.java.me.avankziar.bup.spigot.cmdtree.ArgumentModule;
 import main.java.me.avankziar.bup.spigot.cmdtree.BaseConstructor;
 import main.java.me.avankziar.bup.spigot.cmdtree.CommandConstructor;
 import main.java.me.avankziar.bup.spigot.cmdtree.CommandExecuteType;
+import main.java.me.avankziar.bup.spigot.conditionbonusmalus.Bypass;
 import main.java.me.avankziar.bup.spigot.database.YamlHandler;
 import main.java.me.avankziar.bup.spigot.database.YamlManager;
 import main.java.me.avankziar.bup.spigot.handler.ConfigHandler;
 import main.java.me.avankziar.bup.spigot.listener.PlayerExpBottleListener;
 import main.java.me.avankziar.bup.spigot.metrics.Metrics;
-import main.java.me.avankziar.bup.spigot.permission.BoniMali;
 import main.java.me.avankziar.ifh.general.bonusmalus.BonusMalus;
 import main.java.me.avankziar.ifh.general.bonusmalus.BonusMalusType;
+import main.java.me.avankziar.ifh.general.condition.Condition;
 import main.java.me.avankziar.ifh.spigot.administration.Administration;
 
 public class BottleUp extends JavaPlugin
@@ -57,10 +58,11 @@ public class BottleUp extends JavaPlugin
 	private LinkedHashMap<String, ArgumentModule> argumentMap = new LinkedHashMap<>();
 	private ArrayList<String> players = new ArrayList<>();
 	
-	public static String infoCommandPath = "CmdBase";
+	public static String infoCommandPath = "CmdBUP";
 	public static String infoCommand = "/";
 	
-	public Administration administrationConsumer;
+	private Administration administrationConsumer;
+	private Condition conditionConsumer;
 	private BonusMalus bonusMalusConsumer;
 	
 	public void onEnable()
@@ -84,7 +86,7 @@ public class BottleUp extends JavaPlugin
 		
 		setupCommandTree();
 		setupListeners();
-		//setupBonusMalus();
+		setupIFHConsumer();
 		setupBstats();
 	}
 	
@@ -320,8 +322,84 @@ public class BottleUp extends JavaPlugin
 		return administrationConsumer;
 	}
 	
-	private void setupBonusMalus() 
+	public void setupIFHConsumer()
 	{
+		setupIFHCondition();
+		setupIFHBonusMalus();
+	}
+	
+	public void setupIFHCondition()
+	{
+		if(!new ConfigHandler().isMechanicConditionEnabled())
+		{
+			return;
+		}
+		if(!plugin.getServer().getPluginManager().isPluginEnabled("InterfaceHub")) 
+	    {
+	    	return;
+	    }
+        new BukkitRunnable()
+        {
+        	int i = 0;
+			@Override
+			public void run()
+			{
+				try
+				{
+					if(i == 20)
+				    {
+						cancel();
+				    	return;
+				    }
+				    RegisteredServiceProvider<main.java.me.avankziar.ifh.general.condition.Condition> rsp = 
+		                             getServer().getServicesManager().getRegistration(
+		                            		 main.java.me.avankziar.ifh.general.condition.Condition.class);
+				    if(rsp == null) 
+				    {
+				    	i++;
+				        return;
+				    }
+				    conditionConsumer = rsp.getProvider();
+				    log.info(pluginName + " detected InterfaceHub >>> Condition.class is consumed!");
+				    cancel();
+				} catch(NoClassDefFoundError e)
+				{
+					cancel();
+				}
+				if(getCondition() != null)
+				{
+					for(BaseConstructor bc : getCommandHelpList())
+					{
+						if(!bc.isPutUpCmdPermToConditionSystem())
+						{
+							continue;
+						}
+						if(getCondition().isRegistered(bc.getConditionPath()))
+						{
+							continue;
+						}
+						String[] ex = {plugin.getYamlHandler().getCommands().getString(bc.getPath()+".Explanation")};
+						getCondition().register(
+								bc.getConditionPath(),
+								plugin.getYamlHandler().getCommands().getString(bc.getPath()+".Displayname", "Command "+bc.getName()),
+								ex);
+					}
+				}
+			}
+        }.runTaskTimer(plugin, 0L, 20*2);
+	}
+	
+	public Condition getCondition()
+	{
+		return conditionConsumer;
+	}
+	
+	private void setupIFHBonusMalus() 
+	{
+		if(!new ConfigHandler().isMechanicBonusMalusEnabled())
+		{
+			return;
+		}
         if(Bukkit.getPluginManager().getPlugin("InterfaceHub") == null) 
         {
             return;
@@ -356,41 +434,11 @@ public class BottleUp extends JavaPlugin
 					cancel();
 				}
 				if(getBonusMalus() != null)
-				{
-					if(!new ConfigHandler().isMechanicBonusMalusEnabled())
+				{				
+					List<Bypass.Counter> list = new ArrayList<Bypass.Counter>(EnumSet.allOf(Bypass.Counter.class));
+					for(Bypass.Counter ept : list)
 					{
-						return;
-					}
-					int cmd = 0;
-					int bperm = 0;
-					int cperm = 0;
-					int bm = 0;
-					for(BaseConstructor bc : getCommandHelpList())
-					{
-						if(!bc.isPutUpCmdPermToBonusMalusSystem())
-						{
-							continue;
-						}
-						String bmn = pluginName.toLowerCase()+":"+bc.getPath();
-						if(getBonusMalus().isRegistered(bmn))
-						{
-							cmd++;
-							continue;
-						}
-						String[] ex = {plugin.getYamlHandler().getCommands().getString(bc.getPath()+".Explanation")};
-						getBonusMalus().register(
-								bmn,
-								plugin.getYamlHandler().getCommands().getString(bc.getPath()+".Displayname", "Command "+bc.getName()),
-								true,
-								BonusMalusType.UP,
-								ex);
-						cmd++;
-					}
-					List<BoniMali> list3 = new ArrayList<BoniMali>(EnumSet.allOf(BoniMali.class));
-					for(BoniMali ept : list3)
-					{
-						String bmn = pluginName.toLowerCase()+":"+ept.toString().toLowerCase();
-						if(!getBonusMalus().isRegistered(bmn))
+						if(!getBonusMalus().isRegistered(ept.getBonusMalus()))
 						{
 							BonusMalusType bmt = null;
 							switch(ept)
@@ -402,21 +450,14 @@ public class BottleUp extends JavaPlugin
 								bmt = BonusMalusType.DOWN;
 								break;
 							}
-							List<String> lar = plugin.getYamlHandler().getBMLang().getStringList(ept.toString()+".Explanation");
+							List<String> lar = plugin.getYamlHandler().getCBMLang().getStringList(ept.toString()+".Explanation");
 							getBonusMalus().register(
-									bmn,
-									plugin.getYamlHandler().getBMLang().getString(ept.toString()+".Displayname", ept.toString()),
-									false,
+									ept.getBonusMalus(),
+									plugin.getYamlHandler().getCBMLang().getString(ept.toString()+".Displayname", ept.toString()),
 									bmt,
 									lar.toArray(new String[lar.size()]));
 						}
-						bm++;
 					}
-					log.info("===Registered BonusMalus===");
-					log.info(">> Commands: "+cmd);
-					log.info(">> BypassPerm: "+bperm);
-					log.info(">> CountPerm: "+cperm);
-					log.info(">> Other BoniMali: "+bm);
 				}
 			}
         }.runTaskTimer(plugin, 20L, 20*2);

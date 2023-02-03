@@ -4,55 +4,71 @@ import java.util.List;
 
 import org.bukkit.entity.Player;
 
-import main.java.me.avankziar.bup.spigot.BottleUp;
-import main.java.me.avankziar.bup.spigot.permission.BoniMali;
+import main.java.me.avankziar.bup.spigot.cmdtree.BaseConstructor;
+import main.java.me.avankziar.bup.spigot.conditionbonusmalus.Bypass;
+import main.java.me.avankziar.bup.spigot.conditionbonusmalus.ConditionBonusMalus;
 
 public class ConfigHandler
-{
-	private BottleUp plugin;
+{	
+	public ConfigHandler(){}
 	
-	public ConfigHandler()
+	public enum CountType
 	{
-		plugin = BottleUp.getPlugin();
+		HIGHEST, ADDUP;
+	}
+	
+	public CountType getCountPermType()
+	{
+		String s = BaseConstructor.getPlugin().getYamlHandler().getConfig().getString("Mechanic.CountPerm", "HIGHEST");
+		CountType ct;
+		try
+		{
+			ct = CountType.valueOf(s);
+		} catch (Exception e)
+		{
+			ct = CountType.HIGHEST;
+		}
+		return ct;
 	}
 	
 	public boolean isMechanicBonusMalusEnabled()
 	{
-		return plugin.getYamlHandler().getConfig().getBoolean("EnableMechanic.BonusMalus", false);
+		return BaseConstructor.getPlugin().getYamlHandler().getConfig().getBoolean("EnableMechanic.BonusMalus", false);
+	}
+	
+	public boolean isMechanicConditionEnabled()
+	{
+		return BaseConstructor.getPlugin().getYamlHandler().getConfig().getBoolean("EnableMechanic.Condition", false);
 	}
 	
 	public boolean isMechanicVanillaThrowExpBottle()
 	{
-		return plugin.getYamlHandler().getConfig().getBoolean("EnableMechanic.VanillaThrowExpBottle", false);
+		return BaseConstructor.getPlugin().getYamlHandler().getConfig().getBoolean("EnableMechanic.VanillaThrowExpBottle", false);
 	}
 	
 	public double getExpIntoBottle(Player player)
 	{
-		double exp = plugin.getYamlHandler().getConfig().getDouble("ExpBottle.ExpIntoBottle", 20);
-		if(plugin.getBonusMalus() != null)
-		{
-			exp = plugin.getBonusMalus().getResult(player.getUniqueId(), exp, BoniMali.EXP_IN_BOTTLE.getBonusMalus());
-		}
+		double exp = ConditionBonusMalus.getResult(player.getUniqueId(),
+				BaseConstructor.getPlugin().getYamlHandler().getConfig().getDouble("ExpBottle.ExpIntoBottle", 20),
+				Bypass.Counter.EXP_IN_BOTTLE);
 		return exp;
 	}
 	
 	public double getExpFromBottle(Player player)
 	{
-		double exp = plugin.getYamlHandler().getConfig().getDouble("ExpBottle.ExpFromBottle", 20);
-		if(plugin.getBonusMalus() != null)
-		{
-			exp = plugin.getBonusMalus().getResult(player.getUniqueId(), exp, BoniMali.EXP_OUT_BOTTLE.getBonusMalus());
-		}
+		double exp = ConditionBonusMalus.getResult(player.getUniqueId(),
+				BaseConstructor.getPlugin().getYamlHandler().getConfig().getDouble("ExpBottle.ExpFromBottle", 20),
+				Bypass.Counter.EXP_OUT_BOTTLE);
 		return exp;
 	}
 	
 	public List<String> getBottleTerm()
 	{
-		return plugin.getYamlHandler().getConfig().getStringList("ExpBottle.BottleTerm");
+		return BaseConstructor.getPlugin().getYamlHandler().getConfig().getStringList("ExpBottle.BottleTerm");
 	}
 	
 	public List<String> getLevelTerm()
 	{
-		return plugin.getYamlHandler().getConfig().getStringList("ExpBottle.LevelTerm");
+		return BaseConstructor.getPlugin().getYamlHandler().getConfig().getStringList("ExpBottle.LevelTerm");
 	}
 }

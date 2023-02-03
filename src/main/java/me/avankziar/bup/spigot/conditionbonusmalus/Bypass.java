@@ -1,0 +1,72 @@
+package main.java.me.avankziar.bup.spigot.conditionbonusmalus;
+
+import java.util.LinkedHashMap;
+
+import main.java.me.avankziar.bup.spigot.cmdtree.BaseConstructor;
+
+public class Bypass
+{
+	public enum Permission
+	{
+		//Here Condition and BypassPermission.
+		;
+		
+		public String getCondition()
+		{
+			return BaseConstructor.getPlugin().pluginName.toLowerCase()+"-"+this.toString().toLowerCase();
+		}
+	}
+	
+	private static LinkedHashMap<Bypass.Permission, String> mapPerm = new LinkedHashMap<>();
+	
+	public static void set(Bypass.Permission bypass, String perm)
+	{
+		mapPerm.put(bypass, perm);
+	}
+	
+	public static String get(Bypass.Permission bypass)
+	{
+		return mapPerm.get(bypass);
+	}
+	
+	public enum Counter
+	{
+		//Here BonusMalus and CountPermission Things
+		EXP_IN_BOTTLE(false),
+		EXP_OUT_BOTTLE(false);
+		
+		private boolean forPermission;
+		
+		Counter()
+		{
+			this.forPermission = true;
+		}
+		
+		Counter(boolean forPermission)
+		{
+			this.forPermission = forPermission;
+		}
+	
+		public boolean forPermission()
+		{
+			return this.forPermission;
+		}
+		
+		public String getBonusMalus()
+		{
+			return BaseConstructor.getPlugin().pluginName.toLowerCase()+"-"+this.toString().toLowerCase();
+		}
+	}
+	
+	private static LinkedHashMap<Bypass.Counter, String> mapCount = new LinkedHashMap<>();
+	
+	public static void set(Bypass.Counter bypass, String perm)
+	{
+		mapCount.put(bypass, perm);
+	}
+	
+	public static String get(Bypass.Counter bypass)
+	{
+		return mapCount.get(bypass);
+	}
+}

@@ -27,8 +27,8 @@ public class YamlHandler
 	private String languages;
 	private File language = null;
 	private YamlConfiguration lang = new YamlConfiguration();
-	private File bmlanguage = null;
-	private YamlConfiguration bmlang = new YamlConfiguration();
+	private File cbmlanguage = null;
+	private YamlConfiguration cbmlang = new YamlConfiguration();
 
 	public YamlHandler(BottleUp plugin)
 	{
@@ -51,9 +51,9 @@ public class YamlHandler
 		return lang;
 	}
 	
-	public YamlConfiguration getBMLang()
+	public YamlConfiguration getCBMLang()
 	{
-		return bmlang;
+		return cbmlang;
 	}
 	
 	private YamlConfiguration loadYamlTask(File file, YamlConfiguration yaml)
@@ -266,24 +266,24 @@ public class YamlHandler
 			return false;
 		}
 		writeFile(language, lang, plugin.getYamlManager().getLanguageKey());
-		bmlanguage = new File(directory.getPath(), "bm_"+languageString+".yml");
-		if(!bmlanguage.exists()) 
+		cbmlanguage = new File(directory.getPath(), "bm_"+languageString+".yml");
+		if(!cbmlanguage.exists()) 
 		{
 			BottleUp.log.info("Create bm_%lang%.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
-				Files.copy(in, bmlanguage.toPath());
+				Files.copy(in, cbmlanguage.toPath());
 			} catch (IOException e)
 			{
 				e.printStackTrace();
 			}
 		}
-		bmlang = loadYamlTask(bmlanguage, bmlang);
-		if(bmlang == null)
+		cbmlang = loadYamlTask(cbmlanguage, cbmlang);
+		if(cbmlang == null)
 		{
 			return false;
 		}
-		writeFile(bmlanguage, bmlang, plugin.getYamlManager().getBonusMalusLanguageKey());
+		writeFile(cbmlanguage, cbmlang, plugin.getYamlManager().getConditionBonusMalusLanguageKey());
 		return true;
 	}
 	

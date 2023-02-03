@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import main.java.me.avankziar.bup.spigot.conditionbonusmalus.Bypass;
 import main.java.me.avankziar.bup.spigot.database.Language.ISO639_2B;
-import main.java.me.avankziar.bup.spigot.permission.BoniMali;
 
 public class YamlManager
 {
@@ -20,7 +20,7 @@ public class YamlManager
 	private static LinkedHashMap<String, Language> configSpigotKeys = new LinkedHashMap<>();
 	private static LinkedHashMap<String, Language> commandsKeys = new LinkedHashMap<>();
 	private static LinkedHashMap<String, Language> languageKeys = new LinkedHashMap<>();
-	private static LinkedHashMap<String, Language> bmlanguageKeys = new LinkedHashMap<>();
+	private static LinkedHashMap<String, Language> cbmlanguageKeys = new LinkedHashMap<>();
 	/*
 	 * Here are mutiplefiles in one "double" map. The first String key is the filename
 	 * So all filename muss be predefine. For example in the config.
@@ -31,8 +31,8 @@ public class YamlManager
 	{
 		initConfig();
 		initCommands();
-		initBonusMalusLanguage();
 		initLanguage();
+		initConditionBonusMalusLanguage();
 	}
 	
 	public ISO639_2B getLanguageType()
@@ -65,9 +65,9 @@ public class YamlManager
 		return languageKeys;
 	}
 	
-	public LinkedHashMap<String, Language> getBonusMalusLanguageKey()
+	public LinkedHashMap<String, Language> getConditionBonusMalusLanguageKey()
 	{
-		return bmlanguageKeys;
+		return cbmlanguageKeys;
 	}
 	
 	public LinkedHashMap<String, LinkedHashMap<String, Language>> getGUIKey()
@@ -131,6 +131,9 @@ public class YamlManager
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				"hub"}));		
 		configSpigotKeys.put("EnableMechanic.BonusMalus"
+				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
+				true}));
+		configSpigotKeys.put("EnableMechanic.Condition"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				true}));
 		configSpigotKeys.put("EnableMechanic.VanillaThrowExpBottle"
@@ -378,27 +381,25 @@ public class YamlManager
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 						"&eDu hast &f%bottleamount% &eExpflaschen geöffnet bis zum Level &f%level%&e. Dafür wurden &f%addexp% &eExp aufgewendet.",
 						"&eYou have opened &f%bottleamount% &eExp bottles up to the &f%level%&e level. For this you spent &f%addexp% &eExp."}));
-		
-		
 	}
 	
-	public void initBonusMalusLanguage() //INFO:BonusMalusLanguages
+	public void initConditionBonusMalusLanguage() //INFO:BonusMalusLanguages
 	{
-		bmlanguageKeys.put(BoniMali.EXP_IN_BOTTLE.toString()+".Displayname",
+		cbmlanguageKeys.put(Bypass.Counter.EXP_IN_BOTTLE.toString()+".Displayname",
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 						"&eMenge an Exp die in eine Flasche passen",
 						"&eAmount of Exp that fit in one bottle"}));
-		bmlanguageKeys.put(BoniMali.EXP_IN_BOTTLE.toString()+".Explanation",
+		cbmlanguageKeys.put(Bypass.Counter.EXP_IN_BOTTLE.toString()+".Explanation",
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 						"&eDefiniert, wieviel Exp in eine",
 						"&eFlasche gefüllt werden kann.",
 						"&eDefines how much Exp can",
 						"&ebe filled into a bottle."}));
-		bmlanguageKeys.put(BoniMali.EXP_OUT_BOTTLE.toString()+".Displayname",
+		cbmlanguageKeys.put(Bypass.Counter.EXP_OUT_BOTTLE.toString()+".Displayname",
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 						"&eMenge an Exp die aus einer Flasche kommen",
 						"&eAmount of exp coming out of one bottle"}));
-		bmlanguageKeys.put(BoniMali.EXP_OUT_BOTTLE.toString()+".Explanation",
+		cbmlanguageKeys.put(Bypass.Counter.EXP_OUT_BOTTLE.toString()+".Explanation",
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 						"&eDefiniert, wieviel Exp aus einer",
 						"&eFlasche kommt.",
