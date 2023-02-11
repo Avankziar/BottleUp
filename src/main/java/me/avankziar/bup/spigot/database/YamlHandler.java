@@ -266,10 +266,10 @@ public class YamlHandler
 			return false;
 		}
 		writeFile(language, lang, plugin.getYamlManager().getLanguageKey());
-		cbmlanguage = new File(directory.getPath(), "bm_"+languageString+".yml");
+		cbmlanguage = new File(directory.getPath(), "cbm_"+languageString+".yml");
 		if(!cbmlanguage.exists()) 
 		{
-			BottleUp.log.info("Create bm_%lang%.yml...".replace("%lang%", languageString));
+			BottleUp.log.info("Create cbm_%lang%.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, cbmlanguage.toPath());
