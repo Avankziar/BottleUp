@@ -1,5 +1,12 @@
 Future Build
 
+Build 1-1-0
+- Unterstützung des Condition Interface
+- Unterstützung des BonusMalus Interface
+- Hinzugefügt Bonus/Malus:
+  - exp_out_bottle, Anzahl Exp die aus der Expflasche rauskommen
+  - exp_in_bottle, Anzahl Exp die in die Expflasche hineingehen
+
 Build 1-0-0
 /bottle use [<Zahl:Bottle/Level>]
 /bottle fill [<Zahl:Bottle/Level>]
