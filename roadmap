@@ -2,7 +2,8 @@ Future Build
 
 Build 1-2-0
 - Spigot 1.19.4 Support
-- IFH Condition und BonusMalus zu ValueEntry und Modifier geändert.
+- IFH 1-6-0 Support.
+- IFH Condition & BonusMalus zu ValueEntry & Modifier geändert.
 
 Build 1-1-0
 - Unterstützung des Condition Interface als Consumer
