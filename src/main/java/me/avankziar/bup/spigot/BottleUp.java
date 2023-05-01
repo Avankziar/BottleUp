@@ -33,15 +33,15 @@ import main.java.me.avankziar.bup.spigot.cmdtree.ArgumentModule;
 import main.java.me.avankziar.bup.spigot.cmdtree.BaseConstructor;
 import main.java.me.avankziar.bup.spigot.cmdtree.CommandConstructor;
 import main.java.me.avankziar.bup.spigot.cmdtree.CommandExecuteType;
-import main.java.me.avankziar.bup.spigot.conditionbonusmalus.Bypass;
 import main.java.me.avankziar.bup.spigot.database.YamlHandler;
 import main.java.me.avankziar.bup.spigot.database.YamlManager;
 import main.java.me.avankziar.bup.spigot.handler.ConfigHandler;
 import main.java.me.avankziar.bup.spigot.listener.PlayerExpBottleListener;
 import main.java.me.avankziar.bup.spigot.metrics.Metrics;
-import main.java.me.avankziar.ifh.general.bonusmalus.BonusMalus;
-import main.java.me.avankziar.ifh.general.bonusmalus.BonusMalusType;
-import main.java.me.avankziar.ifh.general.condition.Condition;
+import main.java.me.avankziar.bup.spigot.modifiervalueentry.Bypass;
+import main.java.me.avankziar.ifh.general.modifier.ModificationType;
+import main.java.me.avankziar.ifh.general.modifier.Modifier;
+import main.java.me.avankziar.ifh.general.valueentry.ValueEntry;
 import main.java.me.avankziar.ifh.spigot.administration.Administration;
 
 public class BottleUp extends JavaPlugin
@@ -62,8 +62,8 @@ public class BottleUp extends JavaPlugin
 	public static String infoCommand = "/";
 	
 	private Administration administrationConsumer;
-	private Condition conditionConsumer;
-	private BonusMalus bonusMalusConsumer;
+	private ValueEntry valueEntryConsumer;
+	private Modifier modifierConsumer;
 	
 	public void onEnable()
 	{
@@ -330,7 +330,7 @@ public class BottleUp extends JavaPlugin
 	
 	public void setupIFHCondition()
 	{
-		if(!new ConfigHandler().isMechanicConditionEnabled())
+		if(!new ConfigHandler().isMechanicValueEntryEnabled())
 		{
 			return;
 		}
@@ -351,22 +351,22 @@ public class BottleUp extends JavaPlugin
 						cancel();
 				    	return;
 				    }
-				    RegisteredServiceProvider<main.java.me.avankziar.ifh.general.condition.Condition> rsp = 
+				    RegisteredServiceProvider<main.java.me.avankziar.ifh.general.valueentry.ValueEntry> rsp = 
 		                             getServer().getServicesManager().getRegistration(
-		                            		 main.java.me.avankziar.ifh.general.condition.Condition.class);
+		                            		 main.java.me.avankziar.ifh.general.valueentry.ValueEntry.class);
 				    if(rsp == null) 
 				    {
 				    	i++;
 				        return;
 				    }
-				    conditionConsumer = rsp.getProvider();
-				    log.info(pluginName + " detected InterfaceHub >>> Condition.class is consumed!");
+				    valueEntryConsumer = rsp.getProvider();
+				    log.info(pluginName + " detected InterfaceHub >>> ValueEntry.class is consumed!");
 				    cancel();
 				} catch(NoClassDefFoundError e)
 				{
 					cancel();
 				}
-				if(getCondition() != null)
+				if(getValueEntry() != null)
 				{
 					for(BaseConstructor bc : getCommandHelpList())
 					{
@@ -374,12 +374,12 @@ public class BottleUp extends JavaPlugin
 						{
 							continue;
 						}
-						if(getCondition().isRegistered(bc.getConditionPath()))
+						if(getValueEntry().isRegistered(bc.getConditionPath()))
 						{
 							continue;
 						}
 						String[] ex = {plugin.getYamlHandler().getCommands().getString(bc.getPath()+".Explanation")};
-						getCondition().register(
+						getValueEntry().register(
 								bc.getConditionPath(),
 								plugin.getYamlHandler().getCommands().getString(bc.getPath()+".Displayname", "Command "+bc.getName()),
 								ex);
@@ -389,14 +389,14 @@ public class BottleUp extends JavaPlugin
         }.runTaskTimer(plugin, 0L, 20*2);
 	}
 	
-	public Condition getCondition()
+	public ValueEntry getValueEntry()
 	{
-		return conditionConsumer;
+		return valueEntryConsumer;
 	}
 	
 	private void setupIFHBonusMalus() 
 	{
-		if(!new ConfigHandler().isMechanicBonusMalusEnabled())
+		if(!new ConfigHandler().isMechanicModifierEnabled())
 		{
 			return;
 		}
@@ -417,44 +417,44 @@ public class BottleUp extends JavaPlugin
 						cancel();
 						return;
 				    }
-				    RegisteredServiceProvider<main.java.me.avankziar.ifh.general.bonusmalus.BonusMalus> rsp = 
+				    RegisteredServiceProvider<main.java.me.avankziar.ifh.general.modifier.Modifier> rsp = 
 		                             getServer().getServicesManager().getRegistration(
-		                            		 main.java.me.avankziar.ifh.general.bonusmalus.BonusMalus.class);
+		                            		 main.java.me.avankziar.ifh.general.modifier.Modifier.class);
 				    if(rsp == null) 
 				    {
 				    	//Check up to 20 seconds after the start, to connect with the provider
 				    	i++;
 				        return;
 				    }
-				    bonusMalusConsumer = rsp.getProvider();
-				    log.info(pluginName + " detected InterfaceHub >>> BonusMalus.class is consumed!");
+				    modifierConsumer = rsp.getProvider();
+				    log.info(pluginName + " detected InterfaceHub >>> Modifier.class is consumed!");
 				    cancel();
 				} catch(NoClassDefFoundError e)
 				{
 					cancel();
 				}
-				if(getBonusMalus() != null)
+				if(getModifier() != null)
 				{				
 					List<Bypass.Counter> list = new ArrayList<Bypass.Counter>(EnumSet.allOf(Bypass.Counter.class));
 					for(Bypass.Counter ept : list)
 					{
-						if(!getBonusMalus().isRegistered(ept.getBonusMalus()))
+						if(!getModifier().isRegistered(ept.getModification()))
 						{
-							BonusMalusType bmt = null;
+							ModificationType modt = null;
 							switch(ept)
 							{
 							case EXP_OUT_BOTTLE:
-								bmt = BonusMalusType.UP;
+								modt = ModificationType.UP;
 								break;
 							case EXP_IN_BOTTLE:
-								bmt = BonusMalusType.DOWN;
+								modt = ModificationType.DOWN;
 								break;
 							}
 							List<String> lar = plugin.getYamlHandler().getCBMLang().getStringList(ept.toString()+".Explanation");
-							getBonusMalus().register(
-									ept.getBonusMalus(),
+							getModifier().register(
+									ept.getModification(),
 									plugin.getYamlHandler().getCBMLang().getString(ept.toString()+".Displayname", ept.toString()),
-									bmt,
+									modt,
 									lar.toArray(new String[lar.size()]));
 						}
 					}
@@ -463,9 +463,9 @@ public class BottleUp extends JavaPlugin
         }.runTaskTimer(plugin, 20L, 20*2);
 	}
 	
-	public BonusMalus getBonusMalus()
+	public Modifier getModifier()
 	{
-		return bonusMalusConsumer;
+		return modifierConsumer;
 	}
 	
 	public void setupBstats()

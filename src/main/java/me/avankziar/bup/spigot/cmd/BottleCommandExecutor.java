@@ -14,8 +14,8 @@ import main.java.me.avankziar.bup.spigot.assistance.Experience;
 import main.java.me.avankziar.bup.spigot.cmdtree.ArgumentConstructor;
 import main.java.me.avankziar.bup.spigot.cmdtree.ArgumentModule;
 import main.java.me.avankziar.bup.spigot.cmdtree.CommandConstructor;
-import main.java.me.avankziar.bup.spigot.conditionbonusmalus.ConditionBonusMalus;
 import main.java.me.avankziar.bup.spigot.handler.ConfigHandler;
+import main.java.me.avankziar.bup.spigot.modifiervalueentry.ModifierValueEntry;
 import net.md_5.bungee.api.chat.ClickEvent;
 
 public class BottleCommandExecutor implements CommandExecutor
@@ -44,7 +44,7 @@ public class BottleCommandExecutor implements CommandExecutor
 				return false;
 			}
 			Player player = (Player) sender;
-			if(!ConditionBonusMalus.hasPermission(player, cc))
+			if(!ModifierValueEntry.hasPermission(player, cc))
 			{
 				///Du hast dafür keine Rechte!
 				player.spigot().sendMessage(ChatApi.tctl(plugin.getYamlHandler().getLang().getString("NoPermission")));
@@ -66,7 +66,7 @@ public class BottleCommandExecutor implements CommandExecutor
 						if (sender instanceof Player)
 						{
 							Player player = (Player) sender;
-							if(ConditionBonusMalus.hasPermission(player, ac))
+							if(ModifierValueEntry.hasPermission(player, ac))
 							{
 								ArgumentModule am = plugin.getArgumentMap().get(ac.getPath());
 								if(am != null)

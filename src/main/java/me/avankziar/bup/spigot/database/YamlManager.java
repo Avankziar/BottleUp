@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import main.java.me.avankziar.bup.spigot.conditionbonusmalus.Bypass;
 import main.java.me.avankziar.bup.spigot.database.Language.ISO639_2B;
+import main.java.me.avankziar.bup.spigot.modifiervalueentry.Bypass;
 
 public class YamlManager
 {
@@ -130,10 +130,10 @@ public class YamlManager
 		configSpigotKeys.put("ServerName"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				"hub"}));		
-		configSpigotKeys.put("EnableMechanic.BonusMalus"
+		configSpigotKeys.put("EnableMechanic.Modifier"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				true}));
-		configSpigotKeys.put("EnableMechanic.Condition"
+		configSpigotKeys.put("EnableMechanic.ValueEntry"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				true}));
 		configSpigotKeys.put("EnableMechanic.VanillaThrowExpBottle"

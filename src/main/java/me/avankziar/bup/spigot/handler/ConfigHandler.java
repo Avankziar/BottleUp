@@ -5,8 +5,8 @@ import java.util.List;
 import org.bukkit.entity.Player;
 
 import main.java.me.avankziar.bup.spigot.cmdtree.BaseConstructor;
-import main.java.me.avankziar.bup.spigot.conditionbonusmalus.Bypass;
-import main.java.me.avankziar.bup.spigot.conditionbonusmalus.ConditionBonusMalus;
+import main.java.me.avankziar.bup.spigot.modifiervalueentry.Bypass;
+import main.java.me.avankziar.bup.spigot.modifiervalueentry.ModifierValueEntry;
 
 public class ConfigHandler
 {	
@@ -31,14 +31,14 @@ public class ConfigHandler
 		return ct;
 	}
 	
-	public boolean isMechanicBonusMalusEnabled()
+	public boolean isMechanicModifierEnabled()
 	{
-		return BaseConstructor.getPlugin().getYamlHandler().getConfig().getBoolean("EnableMechanic.BonusMalus", false);
+		return BaseConstructor.getPlugin().getYamlHandler().getConfig().getBoolean("EnableMechanic.Modifier", false);
 	}
 	
-	public boolean isMechanicConditionEnabled()
+	public boolean isMechanicValueEntryEnabled()
 	{
-		return BaseConstructor.getPlugin().getYamlHandler().getConfig().getBoolean("EnableMechanic.Condition", false);
+		return BaseConstructor.getPlugin().getYamlHandler().getConfig().getBoolean("EnableMechanic.ValueEntry", false);
 	}
 	
 	public boolean isMechanicVanillaThrowExpBottle()
@@ -48,7 +48,7 @@ public class ConfigHandler
 	
 	public double getExpIntoBottle(Player player)
 	{
-		double exp = ConditionBonusMalus.getResult(player.getUniqueId(),
+		double exp = ModifierValueEntry.getResult(player.getUniqueId(),
 				BaseConstructor.getPlugin().getYamlHandler().getConfig().getDouble("ExpBottle.ExpIntoBottle", 20),
 				Bypass.Counter.EXP_IN_BOTTLE);
 		return exp;
@@ -56,7 +56,7 @@ public class ConfigHandler
 	
 	public double getExpFromBottle(Player player)
 	{
-		double exp = ConditionBonusMalus.getResult(player.getUniqueId(),
+		double exp = ModifierValueEntry.getResult(player.getUniqueId(),
 				BaseConstructor.getPlugin().getYamlHandler().getConfig().getDouble("ExpBottle.ExpFromBottle", 20),
 				Bypass.Counter.EXP_OUT_BOTTLE);
 		return exp;

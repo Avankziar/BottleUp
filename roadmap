@@ -1,8 +1,12 @@
 Future Build
 
+Build 1-2-0
+- Spigot 1.19.4 Support
+- IFH Condition und BonusMalus zu ValueEntry und Modifier geändert.
+
 Build 1-1-0
-- Unterstützung des Condition Interface
-- Unterstützung des BonusMalus Interface
+- Unterstützung des Condition Interface als Consumer
+- Unterstützung des BonusMalus Interface als Consumer
 - Hinzugefügt Bonus/Malus:
   - bottleup-exp_out_bottle, Anzahl Exp die aus der Expflasche rauskommen
   - bottleup-exp_in_bottle, Anzahl Exp die in die Expflasche hineingehen
