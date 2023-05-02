@@ -324,11 +324,11 @@ public class BottleUp extends JavaPlugin
 	
 	public void setupIFHConsumer()
 	{
-		setupIFHCondition();
-		setupIFHBonusMalus();
+		setupIFHValueEntry();
+		setupIFHModifier();
 	}
 	
-	public void setupIFHCondition()
+	public void setupIFHValueEntry()
 	{
 		if(!new ConfigHandler().isMechanicValueEntryEnabled())
 		{
@@ -394,7 +394,7 @@ public class BottleUp extends JavaPlugin
 		return valueEntryConsumer;
 	}
 	
-	private void setupIFHBonusMalus() 
+	private void setupIFHModifier() 
 	{
 		if(!new ConfigHandler().isMechanicModifierEnabled())
 		{
