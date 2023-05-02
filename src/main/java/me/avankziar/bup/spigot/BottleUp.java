@@ -370,7 +370,7 @@ public class BottleUp extends JavaPlugin
 				{
 					for(BaseConstructor bc : getCommandHelpList())
 					{
-						if(!bc.isPutUpCmdPermToConditionSystem())
+						if(!bc.isPutUpCmdPermToValueEntrySystem())
 						{
 							continue;
 						}
