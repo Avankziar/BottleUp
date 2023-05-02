@@ -450,10 +450,10 @@ public class BottleUp extends JavaPlugin
 								modt = ModificationType.DOWN;
 								break;
 							}
-							List<String> lar = plugin.getYamlHandler().getCBMLang().getStringList(ept.toString()+".Explanation");
+							List<String> lar = plugin.getYamlHandler().getMVELang().getStringList(ept.toString()+".Explanation");
 							getModifier().register(
 									ept.getModification(),
-									plugin.getYamlHandler().getCBMLang().getString(ept.toString()+".Displayname", ept.toString()),
+									plugin.getYamlHandler().getMVELang().getString(ept.toString()+".Displayname", ept.toString()),
 									modt,
 									lar.toArray(new String[lar.size()]));
 						}

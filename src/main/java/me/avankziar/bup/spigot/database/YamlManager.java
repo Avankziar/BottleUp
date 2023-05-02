@@ -20,7 +20,7 @@ public class YamlManager
 	private static LinkedHashMap<String, Language> configSpigotKeys = new LinkedHashMap<>();
 	private static LinkedHashMap<String, Language> commandsKeys = new LinkedHashMap<>();
 	private static LinkedHashMap<String, Language> languageKeys = new LinkedHashMap<>();
-	private static LinkedHashMap<String, Language> cbmlanguageKeys = new LinkedHashMap<>();
+	private static LinkedHashMap<String, Language> mvelanguageKeys = new LinkedHashMap<>();
 	/*
 	 * Here are mutiplefiles in one "double" map. The first String key is the filename
 	 * So all filename muss be predefine. For example in the config.
@@ -32,7 +32,7 @@ public class YamlManager
 		initConfig();
 		initCommands();
 		initLanguage();
-		initConditionBonusMalusLanguage();
+		initModifierValueEntryLanguage();
 	}
 	
 	public ISO639_2B getLanguageType()
@@ -65,9 +65,9 @@ public class YamlManager
 		return languageKeys;
 	}
 	
-	public LinkedHashMap<String, Language> getConditionBonusMalusLanguageKey()
+	public LinkedHashMap<String, Language> getModifierValueEntryLanguageKey()
 	{
-		return cbmlanguageKeys;
+		return mvelanguageKeys;
 	}
 	
 	public LinkedHashMap<String, LinkedHashMap<String, Language>> getGUIKey()
@@ -386,23 +386,23 @@ public class YamlManager
 						"&eYou have opened &f%bottleamount% &eExp bottles up to the &f%level%&e level. For this you spent &f%addexp% &eExp."}));
 	}
 	
-	public void initConditionBonusMalusLanguage() //INFO:BonusMalusLanguages
+	public void initModifierValueEntryLanguage() //INFO:BonusMalusLanguages
 	{
-		cbmlanguageKeys.put(Bypass.Counter.EXP_IN_BOTTLE.toString()+".Displayname",
+		mvelanguageKeys.put(Bypass.Counter.EXP_IN_BOTTLE.toString()+".Displayname",
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 						"&eMenge an Exp die in eine Flasche passen",
 						"&eAmount of Exp that fit in one bottle"}));
-		cbmlanguageKeys.put(Bypass.Counter.EXP_IN_BOTTLE.toString()+".Explanation",
+		mvelanguageKeys.put(Bypass.Counter.EXP_IN_BOTTLE.toString()+".Explanation",
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 						"&eDefiniert, wieviel Exp in eine",
 						"&eFlasche gefüllt werden kann.",
 						"&eDefines how much Exp can",
 						"&ebe filled into a bottle."}));
-		cbmlanguageKeys.put(Bypass.Counter.EXP_OUT_BOTTLE.toString()+".Displayname",
+		mvelanguageKeys.put(Bypass.Counter.EXP_OUT_BOTTLE.toString()+".Displayname",
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 						"&eMenge an Exp die aus einer Flasche kommen",
 						"&eAmount of exp coming out of one bottle"}));
-		cbmlanguageKeys.put(Bypass.Counter.EXP_OUT_BOTTLE.toString()+".Explanation",
+		mvelanguageKeys.put(Bypass.Counter.EXP_OUT_BOTTLE.toString()+".Explanation",
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 						"&eDefiniert, wieviel Exp aus einer",
 						"&eFlasche kommt.",
