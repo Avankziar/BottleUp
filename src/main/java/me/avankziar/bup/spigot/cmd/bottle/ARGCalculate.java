@@ -39,7 +39,7 @@ public class ARGCalculate extends ArgumentModule
 			double ptexp = Experience.getExp(player);
 			double gtexp = Experience.getExp(level);
 			int boam = (int) Math.floor((ptexp-gtexp)/expinb);
-			player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.CalculateFill")
+			player.spigot().sendMessage(ChatApi.tctl(plugin.getYamlHandler().getLang().getString("CmdBottle.CalculateFill")
 					.replace("%level%", String.valueOf(level))
 					.replace("%bottleamount%", String.valueOf(boam))
 					.replace("%playerexp%", String.valueOf((int)ptexp))
@@ -52,7 +52,7 @@ public class ARGCalculate extends ArgumentModule
 			double ptexp = Experience.getExp(player);
 			double gtexp = Experience.getExp(level);
 			int boam = (int) Math.ceil((gtexp-ptexp)/expfromb);
-			player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.CalculateUse")
+			player.spigot().sendMessage(ChatApi.tctl(plugin.getYamlHandler().getLang().getString("CmdBottle.CalculateUse")
 					.replace("%level%", String.valueOf(level))
 					.replace("%bottleamount%", String.valueOf(boam))
 					.replace("%playerexp%", String.valueOf((int)ptexp))
@@ -61,7 +61,7 @@ public class ARGCalculate extends ArgumentModule
 					));
 		} else //plevel == level
 		{
-			player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.NothingToCalculate")));
+			player.spigot().sendMessage(ChatApi.tctl(plugin.getYamlHandler().getLang().getString("CmdBottle.NothingToCalculate")));
 		}
 	}
 }

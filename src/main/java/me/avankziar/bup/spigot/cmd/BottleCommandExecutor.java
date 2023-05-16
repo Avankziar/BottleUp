@@ -137,7 +137,7 @@ public class BottleCommandExecutor implements CommandExecutor
 		double bottle = texp/expinb;
 		for(String s : plugin.getYamlHandler().getLang().getStringList("CmdBottle.BaseInfo"))
 		{
-			player.sendMessage(ChatApi.tl(s
+			player.spigot().sendMessage(ChatApi.tctl(s
 					.replace("%totalexp%", String.valueOf(texp))
 					.replace("%expinbottle%", String.valueOf(expinb))
 					.replace("%bottle%", String.valueOf(bottle))

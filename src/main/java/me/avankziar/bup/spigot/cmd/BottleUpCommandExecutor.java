@@ -157,7 +157,7 @@ public class BottleUpCommandExecutor implements CommandExecutor
 		int start = page*10;
 		int end = page*10+9;
 		int last = 0;
-		player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("Headline")));
+		player.spigot().sendMessage(ChatApi.tctl(plugin.getYamlHandler().getLang().getString("Headline")));
 		for(BaseConstructor bc : plugin.getCommandHelpList())
 		{
 			if(count >= start && count <= end)

@@ -65,7 +65,7 @@ public class ARGFill extends ArgumentModule
 			doLevel(player, level);
 			return;
 		}
-		player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.WrongInput")
+		player.spigot().sendMessage(ChatApi.tctl(plugin.getYamlHandler().getLang().getString("CmdBottle.WrongInput")
 				.replace("%level%", String.join(", ", new ConfigHandler().getLevelTerm()))
 				.replace("%bottle%", String.join(", ", new ConfigHandler().getBottleTerm()))
 				));
@@ -141,7 +141,7 @@ public class ARGFill extends ArgumentModule
 			}
 		}
 		Experience.changeExp(player, Experience.getExp(player) - (boam * (int) expinb), false);
-		player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.Fill")
+		player.spigot().sendMessage(ChatApi.tctl(plugin.getYamlHandler().getLang().getString("CmdBottle.Fill")
 				.replace("%endexp%", String.valueOf(Experience.getExp(player)))
 				.replace("%removeexp%", String.valueOf(boam * expinb))
 				.replace("%bottleamount%", String.valueOf(boam))
@@ -155,7 +155,8 @@ public class ARGFill extends ArgumentModule
 		double expinb = new ConfigHandler().getExpIntoBottle(player);
 		if(gtexp > ptexp-expinb)
 		{
-			player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.CannotFillMoreBottleBecauseLevelIsAlreadyReached")));
+			player.spigot().sendMessage(ChatApi.tctl(
+					plugin.getYamlHandler().getLang().getString("CmdBottle.CannotFillMoreBottleBecauseLevelIsAlreadyReached")));
 			return;
 		}
 		double dif = ptexp-gtexp;
@@ -218,7 +219,7 @@ public class ARGFill extends ArgumentModule
 			}
 		}
 		Experience.changeExp(player, (int)(ptexp-boam*expinb), false);
-		player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.FillUntilLevel")
+		player.spigot().sendMessage(ChatApi.tctl(plugin.getYamlHandler().getLang().getString("CmdBottle.FillUntilLevel")
 				.replace("%level%", player.getLevel()+"("+level+")")
 				.replace("%removeexp%", String.valueOf(boam*expinb))
 				.replace("%bottleamount%", String.valueOf(boam))

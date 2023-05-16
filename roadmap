@@ -4,6 +4,7 @@ Build 1-2-0
 - Spigot 1.19.4 Support
 - IFH 1-6-0 Support.
 - IFH Condition & BonusMalus zu ValueEntry & Modifier geändert.
+- ~!~ als neuer "Neuer Linie" seperator für alle Nachrichten.
 
 Build 1-1-0
 - Unterstützung des Condition Interface als Consumer

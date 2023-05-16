@@ -64,7 +64,7 @@ public class ARGUse extends ArgumentModule
 			doLevel(player, level);
 			return;
 		}
-		player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.WrongInput")
+		player.spigot().sendMessage(ChatApi.tctl(plugin.getYamlHandler().getLang().getString("CmdBottle.WrongInput")
 				.replace("%level%", String.join(", ", new ConfigHandler().getLevelTerm()))
 				.replace("%bottle%", String.join(", ", new ConfigHandler().getBottleTerm()))
 				));
@@ -121,7 +121,7 @@ public class ARGUse extends ArgumentModule
 			}
 		}
 		Experience.changeExp(player, pexp+texp, false);
-		player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.Use")
+		player.spigot().sendMessage(ChatApi.tctl(plugin.getYamlHandler().getLang().getString("CmdBottle.Use")
 				.replace("%endexp%", String.valueOf(pexp+texp))
 				.replace("%addexp%", String.valueOf(texp))
 				.replace("%bottleamount%", String.valueOf(ba))
@@ -136,7 +136,8 @@ public class ARGUse extends ArgumentModule
 		double dif = gtexp-ptexp;
 		if(dif < expfromb)
 		{
-			player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.CannotUseMoreBottleBecauseLevelIsAlreadyReached")));
+			player.spigot().sendMessage(ChatApi.tctl(
+					plugin.getYamlHandler().getLang().getString("CmdBottle.CannotUseMoreBottleBecauseLevelIsAlreadyReached")));
 			return;
 		}
 		double div = dif/expfromb;
@@ -186,7 +187,7 @@ public class ARGUse extends ArgumentModule
 			}
 		}
 		Experience.changeExp(player, (int)(ptexp+boam*expfromb), false);
-		player.sendMessage(ChatApi.tl(plugin.getYamlHandler().getLang().getString("CmdBottle.UseUntilLevel")
+		player.spigot().sendMessage(ChatApi.tctl(plugin.getYamlHandler().getLang().getString("CmdBottle.UseUntilLevel")
 				.replace("%level%", player.getLevel()+"("+level+")")
 				.replace("%addexp%", String.valueOf(boam*expfromb))
 				.replace("%bottleamount%", String.valueOf(boam))
