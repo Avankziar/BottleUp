@@ -215,7 +215,7 @@ public class YamlManager
 	}
 	
 	private void commandsInput(String path, String name, String basePermission, 
-			String suggestion, String commandString, boolean putUpCmdPermToBonusMalusSystem,
+			String suggestion, String commandString, boolean putUpCmdPermToValueEntrySystem,
 			String helpInfoGerman, String helpInfoEnglish,
 			String dnGerman, String dnEnglish,
 			String exGerman, String exEnglish)
@@ -229,9 +229,6 @@ public class YamlManager
 		commandsKeys.put(path+".Suggestion"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				suggestion}));
-		commandsKeys.put(path+".PutUpCommandPermToBonusMalusSystem"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				putUpCmdPermToBonusMalusSystem}));
 		commandsKeys.put(path+".CommandString"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				commandString}));
@@ -239,18 +236,21 @@ public class YamlManager
 				, new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 				helpInfoGerman,
 				helpInfoEnglish}));
-		commandsKeys.put(path+".Displayname"
+		commandsKeys.put(path+".ValueEntry.PutUpCommandPerm"
+				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
+				putUpCmdPermToValueEntrySystem}));
+		commandsKeys.put(path+".ValueEntry.Displayname"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 				dnGerman,
 				dnEnglish}));
-		commandsKeys.put(path+".Explanation"
+		commandsKeys.put(path+".ValueEntry.Explanation"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 				exGerman,
 				exEnglish}));
 	}
 	
 	private void argumentInput(String path, String argument, String basePermission, 
-			String suggestion, String commandString, boolean putUpCmdPermToBonusMalusSystem,
+			String suggestion, String commandString, boolean putUpCmdPermToValueEntrySystem,
 			String helpInfoGerman, String helpInfoEnglish,
 			String dnGerman, String dnEnglish,
 			String exGerman, String exEnglish)
@@ -264,9 +264,6 @@ public class YamlManager
 		commandsKeys.put(path+".Suggestion"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				suggestion}));
-		commandsKeys.put(path+".PutUpCommandPermToBonusMalusSystem"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				putUpCmdPermToBonusMalusSystem}));
 		commandsKeys.put(path+".CommandString"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				commandString}));
@@ -274,11 +271,14 @@ public class YamlManager
 				, new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 				helpInfoGerman,
 				helpInfoEnglish}));
-		commandsKeys.put(path+".Displayname"
+		commandsKeys.put(path+".ValueEntry.PutUpCommandPerm"
+				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
+				putUpCmdPermToValueEntrySystem}));
+		commandsKeys.put(path+".ValueEntry.Displayname"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 				dnGerman,
 				dnEnglish}));
-		commandsKeys.put(path+".Explanation"
+		commandsKeys.put(path+".ValueEntry.Explanation"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 				exGerman,
 				exEnglish}));
@@ -386,7 +386,7 @@ public class YamlManager
 						"&eYou have opened &f%bottleamount% &eExp bottles up to the &f%level%&e level. For this you spent &f%addexp% &eExp."}));
 	}
 	
-	public void initModifierValueEntryLanguage() //INFO:BonusMalusLanguages
+	public void initModifierValueEntryLanguage() //INFO:ModiferValueEntryLanguages
 	{
 		mvelanguageKeys.put(Bypass.Counter.EXP_IN_BOTTLE.toString()+".Displayname",
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {

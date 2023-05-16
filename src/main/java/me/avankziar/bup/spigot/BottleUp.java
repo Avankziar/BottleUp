@@ -374,15 +374,14 @@ public class BottleUp extends JavaPlugin
 						{
 							continue;
 						}
-						if(getValueEntry().isRegistered(bc.getConditionPath()))
+						if(getValueEntry().isRegistered(bc.getValueEntryPath()))
 						{
 							continue;
 						}
-						String[] ex = {plugin.getYamlHandler().getCommands().getString(bc.getPath()+".Explanation")};
 						getValueEntry().register(
-								bc.getConditionPath(),
-								plugin.getYamlHandler().getCommands().getString(bc.getPath()+".Displayname", "Command "+bc.getName()),
-								ex);
+								bc.getValueEntryPath(),
+								bc.getValueEntryDisplayName(),
+								bc.getValueEntryExplanation());
 					}
 				}
 			}
