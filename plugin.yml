@@ -6,3 +6,4 @@ api-version: 1.17
 description: A Exp Bottle Plugin.
 softdepend: [InterfaceHub]
 website: https://www.spigotmc.org/resources/bottleup.107729/
+prefix: BUP
