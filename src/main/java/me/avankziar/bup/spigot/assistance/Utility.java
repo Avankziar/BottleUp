@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 
 import main.java.me.avankziar.bup.spigot.BottleUp;
-import main.java.me.avankziar.ifh.spigot.position.ServerLocation;
+import me.avankziar.ifh.spigot.position.ServerLocation;
 
 public class Utility
 {	

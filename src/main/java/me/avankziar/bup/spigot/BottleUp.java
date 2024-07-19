@@ -39,10 +39,10 @@ import main.java.me.avankziar.bup.spigot.handler.ConfigHandler;
 import main.java.me.avankziar.bup.spigot.listener.PlayerExpBottleListener;
 import main.java.me.avankziar.bup.spigot.metrics.Metrics;
 import main.java.me.avankziar.bup.spigot.modifiervalueentry.Bypass;
-import main.java.me.avankziar.ifh.general.modifier.ModificationType;
-import main.java.me.avankziar.ifh.general.modifier.Modifier;
-import main.java.me.avankziar.ifh.general.valueentry.ValueEntry;
-import main.java.me.avankziar.ifh.spigot.administration.Administration;
+import me.avankziar.ifh.general.modifier.ModificationType;
+import me.avankziar.ifh.general.modifier.Modifier;
+import me.avankziar.ifh.general.valueentry.ValueEntry;
+import me.avankziar.ifh.spigot.administration.Administration;
 
 public class BottleUp extends JavaPlugin
 {
@@ -307,7 +307,7 @@ public class BottleUp extends JavaPlugin
 	    {
 	    	return;
 	    }
-		RegisteredServiceProvider<main.java.me.avankziar.ifh.spigot.administration.Administration> rsp = 
+		RegisteredServiceProvider<me.avankziar.ifh.spigot.administration.Administration> rsp = 
                 getServer().getServicesManager().getRegistration(Administration.class);
 		if (rsp == null) 
 		{
@@ -351,9 +351,9 @@ public class BottleUp extends JavaPlugin
 						cancel();
 				    	return;
 				    }
-				    RegisteredServiceProvider<main.java.me.avankziar.ifh.general.valueentry.ValueEntry> rsp = 
+				    RegisteredServiceProvider<me.avankziar.ifh.general.valueentry.ValueEntry> rsp = 
 		                             getServer().getServicesManager().getRegistration(
-		                            		 main.java.me.avankziar.ifh.general.valueentry.ValueEntry.class);
+		                            		 me.avankziar.ifh.general.valueentry.ValueEntry.class);
 				    if(rsp == null) 
 				    {
 				    	i++;
@@ -416,9 +416,9 @@ public class BottleUp extends JavaPlugin
 						cancel();
 						return;
 				    }
-				    RegisteredServiceProvider<main.java.me.avankziar.ifh.general.modifier.Modifier> rsp = 
+				    RegisteredServiceProvider<me.avankziar.ifh.general.modifier.Modifier> rsp = 
 		                             getServer().getServicesManager().getRegistration(
-		                            		 main.java.me.avankziar.ifh.general.modifier.Modifier.class);
+		                            		 me.avankziar.ifh.general.modifier.Modifier.class);
 				    if(rsp == null) 
 				    {
 				    	//Check up to 20 seconds after the start, to connect with the provider
