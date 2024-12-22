@@ -1,5 +1,9 @@
 Future Build
 
+1-6-0
+- Spigot 1.21.4 support
+- Api muss mindestens 1.21.3 oder höher sein.
+
 Build 1-5-0
 - Java 21 Dependency
 - Spigot 1.21 Support
