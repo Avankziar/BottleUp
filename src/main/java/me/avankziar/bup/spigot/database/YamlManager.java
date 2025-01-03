@@ -360,6 +360,10 @@ public class YamlManager
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 						"&cFalsche Eingabe! Entweder keine Eingabe, nur Zahlen oder nach den Zahlen ein : sowie %bottle%, %level%!",
 						"&eWrong input! Either no input, only numbers or after the numbers a : as well as %bottle%, %level%!"}));
+		languageKeys.put("CmdBottle.NotEnoughtToFill", 
+				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
+						"&cDu hast nicht Exp um eine Flasche zu füllen!",
+						"&cYou dont have Exp to fill a bottle!"}));
 		languageKeys.put("CmdBottle.Fill", 
 				new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 						"&eDu hast &f%bottleamount% &eExpflaschen befüllt. Dafür hast du &f%removeexp% &eExp aufgewendet. Dir verbleiben noch &f%endexp% &eExp.",

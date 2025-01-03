@@ -122,6 +122,11 @@ public class ARGFill extends ArgumentModule
 				breaks = true;
 			}
 			fillbottle -= is.getAmount() - am;
+			if(am <= 0)
+			{
+				player.spigot().sendMessage(ChatApi.tctl(plugin.getYamlHandler().getLang().getString("CmdBottle.NotEnoughtToFill")));
+				return;
+			}
 			ItemStack js = new ItemStack(Material.EXPERIENCE_BOTTLE, am);
 			player.getInventory().setItem(i, js);
 			if(breaks)
