@@ -141,8 +141,8 @@ public class ARGUse extends ArgumentModule
 			return;
 		}
 		double div = dif/expfromb;
-		int openbottle = (int) Math.ceil(div);		
-		int boam = 0;
+		int mustOpenbottle = (int) Math.ceil(div);		
+		int haveOpenBottle = 0;
 		for(int i = 0; i < player.getInventory().getStorageContents().length; i++)
 		{
 			ItemStack is = player.getInventory().getStorageContents()[i];
@@ -163,34 +163,30 @@ public class ARGUse extends ArgumentModule
 				}
 			}
 			int am = is.getAmount();
-			boolean breaks = false;
-			if(openbottle > boam + am)
+			int d = mustOpenbottle - haveOpenBottle;
+			if(am > d)
 			{
-				boam += is.getAmount();
-				am = 0;	
-			} else if(openbottle == boam + am)
-			{
-				boam += is.getAmount();
-				am = 0;
-				breaks = true;
-			} else //openbottle < boam + am
-			{
-				am = is.getAmount() - (openbottle - boam);
-				boam += openbottle - boam;
-				breaks = true;
-			}
-			ItemStack js = new ItemStack(Material.EXPERIENCE_BOTTLE, am);
-			player.getInventory().setItem(i, js);
-			if(breaks)
-			{
+				haveOpenBottle += d;
+				am = am - d;
+				player.getInventory().setItem(i, new ItemStack(Material.EXPERIENCE_BOTTLE, am));
 				break;
+			} else if(am == d)
+			{
+				haveOpenBottle += is.getAmount();
+				player.getInventory().setItem(i, null);
+				break;
+			} else if(am < d)
+			{
+				haveOpenBottle += is.getAmount();
+				player.getInventory().setItem(i, null);
+				continue;
 			}
 		}
-		Experience.changeExp(player, (int)(ptexp+boam*expfromb), false);
+		Experience.changeExp(player, (int)(ptexp+haveOpenBottle*expfromb), false);
 		player.spigot().sendMessage(ChatApi.tctl(plugin.getYamlHandler().getLang().getString("CmdBottle.UseUntilLevel")
 				.replace("%level%", player.getLevel()+"("+level+")")
-				.replace("%addexp%", String.valueOf(boam*expfromb))
-				.replace("%bottleamount%", String.valueOf(boam))
+				.replace("%addexp%", String.valueOf(haveOpenBottle*expfromb))
+				.replace("%bottleamount%", String.valueOf(haveOpenBottle))
 				));
 	}
 }
